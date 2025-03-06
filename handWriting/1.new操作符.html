@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        function _new(fun, ...args) {
+            const obj = {};
+            obj.__proto__ = fun.prototype;
+            const res =  fun.call(obj,...args);
+            return res instanceof Object ? res : obj;
+        }
+
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        const p = _new(Person, 'lisi', 18);
+        console.log(p);
+
+
+
+
+        /*
+            new操作符做了什么
+            1.创建一个空对象
+            2.让这个空对象的原型指向构造函数的prototype
+            3.让这个空对象的this指向这个空对象
+            4.看构造函数内部有没有返回值，如果返回的是对象类型则直接返回，否则返回创建的新对象。        
+        
+        */
+    </script>
+</body>
+</html>
