@@ -1,0 +1,66 @@
+<!--
+ * @Author: ldg
+ * @Date: 2025-03-11 11:14:57
+ * @LastEditors: ldg gedongliu0803@gmail.com
+ * @LastEditTime: 2025-03-11 11:31:53
+ * @FilePath: \webLearn\handWriting\6.函数科里化.html
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // 接收一部分参数，返回一个函数接收剩余参数，接收足够参数后，执行原函数。   
+
+        /**
+         * 将函数柯里化
+         * @param fn    待柯里化的原函数
+         * @param len   所需的参数个数，默认为原函数的形参个数
+         */
+        function curry(fn,len = fn.length) {
+            return _curry.call(this,fn,len)
+        }
+
+        /**
+         * 中转函数
+         * @param fn    待柯里化的原函数
+         * @param len   所需的参数个数
+         * @param args  已接收的参数列表
+         */
+        function _curry(fn,len,...args) {
+            return function (...params) {
+                let _args = [...args,...params];
+                if(_args.length >= len){
+                    return fn.apply(this,_args);
+                }else{
+                    return _curry.call(this,fn,len,..._args)
+                }
+            }
+        }
+
+        function add(){
+            let args = Array.prototype.slice.call(arguments);
+            let inner = function () {
+                args.push(...arguments);
+                return inner
+            }
+            inner.toString = function () {
+                return args.reduce((a,b) => a + b);
+            }
+            return inner
+        }
+
+        const res = add(1)(2)(3).toString();
+        console.log(res);
+
+    </script>
+</body>
+</html>
