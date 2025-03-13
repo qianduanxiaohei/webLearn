@@ -2,7 +2,7 @@
  * @Author: ldg
  * @Date: 2025-03-11 11:33:05
  * @LastEditors: ldg gedongliu0803@gmail.com
- * @LastEditTime: 2025-03-11 11:52:02
+ * @LastEditTime: 2025-03-13 11:52:12
  * @FilePath: \webLearn\handWriting\7.call、apply、bind.html
  * @Description: 
  * 
@@ -17,11 +17,46 @@
 </head>
 <body>
     <script>
+        /*
+            手写call方法
+            1.定义myCall方法
+            2.增加指向对象的属性f为this(因为用fun.mycall，所以this就是需要调用的函数)
+            3.执行函数，并把参数传入
+            4.删除f
+            5.返回结果
+        */
+        Function.prototype.myCall = function(toThis,...args) {  
+            const key = Symbol('key')
+            toThis[key] = this
+            let res =  toThis[key](...args)
+            delete toThis[key]
+
+            return res
+        }
+        Function.prototype.myApply = function(toThis,args) {  
+            const key = Symbol('key')
+            toThis[key] = this
+            let res =  toThis[key](...args)
+            delete toThis[key]
+
+            return res
+        }
+        Function.prototype.myBind = function(toThis,...args) {  
+            return (...args1) => this.myCall(toThis,...args,...args1)
+        }
+        function aa(a,b,c,d) {
+            console.log(this);
+            console.log(a,b,c,d);
+            return a + b+c+d
+        }
+        let obj = {
+            a:5,
+            b:3 
+        }       
+       let fun =  aa.myBind(obj,1,2)
+       let res = fun(3,4)
+        console.log(res);
         
-
-
-        
-
     </script>
 </body>
 </html>
