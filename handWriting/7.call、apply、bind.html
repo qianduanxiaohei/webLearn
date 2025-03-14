@@ -2,7 +2,7 @@
  * @Author: ldg
  * @Date: 2025-03-11 11:33:05
  * @LastEditors: ldg gedongliu0803@gmail.com
- * @LastEditTime: 2025-03-13 11:52:12
+ * @LastEditTime: 2025-03-14 11:42:56
  * @FilePath: \webLearn\handWriting\7.call、apply、bind.html
  * @Description: 
  * 
@@ -30,7 +30,6 @@
             toThis[key] = this
             let res =  toThis[key](...args)
             delete toThis[key]
-
             return res
         }
         Function.prototype.myApply = function(toThis,args) {  

@@ -1,0 +1,52 @@
+<!--
+ * @Author: ldg
+ * @Date: 2025-03-14 11:37:41
+ * @LastEditors: ldg gedongliu0803@gmail.com
+ * @LastEditTime: 2025-03-14 11:42:09
+ * @FilePath: \webLearn\handWriting\8.继承.html
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //定义父
+        function Parent(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        Parent.prototype.sayName = function () {
+            console.log(this.name);
+        }
+
+
+        //定义子
+        function Child(name, age, gender) {
+            Parent.call(this, name, age); // 继承Parent的属性
+            this.gender = gender;
+        }
+        Child.prototype = Object.create(Parent.prototype,{
+            constructor: {
+                value: Child
+            }
+        }); // 继承Parent的方法
+
+
+        Child.prototype.sayGender = function () {
+            console.log(this.gender);
+        }
+        
+        let child = new Child('lisi', 18, '男');
+        console.log(child);
+        child.sayName();
+        child.sayGender();
+    </script>
+</body>
+</html>
