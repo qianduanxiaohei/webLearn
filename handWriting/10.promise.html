@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        function MyPromise(executor) {
+            this.state = 'pending'
+            this.res = null
+            this.callback = []
+
+            let self  = this
+            function resolve(data) {
+                if (self.state !== 'pending') return
+                self.state = 'fulfilled'
+                self.res = data
+                self.callback.forEach(item => {
+                    item.onFulfilled(data)
+                })
+            }
+
+            function reject(data) {
+                if (self.state !== 'pending') return
+                self.state = 'rejected'
+                self.res = data
+                self.callback.forEach(item => {
+                    item.onRejected(data)
+                })
+            }
+
+            try {
+                executor(resolve,reject)
+            } catch (error) {
+                reject(error)
+            }
+        }
+        MyPromise.prototype.then = function(onFulfilled, onRejected) {
+            if (this.state === 'fulfilled') {
+                onFulfilled(this.res)
+            } 
+            if (this.state === 'rejected') {
+                onRejected(this.res)
+            }
+            if (this.state === 'pending') {
+                this.callback.push ({
+                    onFulfilled,
+                    onRejected
+                }) 
+            }
+        }
+
+        const p = new MyPromise((resolve,reject)=>{
+            setTimeout(() => {
+                resolve('success')
+                // reject('error')
+                // throw new Error('error')
+            }, 1000);
+        })
+        p.then(res=>{
+            console.log(res);
+        },err=>{
+            console.log(err);
+        })
+        p.then(res=>{
+            console.log('333333333');
+        },err=>{
+            console.log('aaaaaaa');
+        })  
+        console.log(p);
+        
+    </script>
+</body>
+</html>
