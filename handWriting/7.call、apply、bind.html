@@ -2,7 +2,7 @@
  * @Author: ldg
  * @Date: 2025-03-11 11:33:05
  * @LastEditors: ldg gedongliu0803@gmail.com
- * @LastEditTime: 2025-03-14 11:42:56
+ * @LastEditTime: 2025-03-17 10:59:52
  * @FilePath: \webLearn\handWriting\7.call、apply、bind.html
  * @Description: 
  * 
@@ -55,6 +55,19 @@
        let fun =  aa.myBind(obj,1,2)
        let res = fun(3,4)
         console.log(res);
+
+        Function.prototype.myCall1 = function(toThis,...paramas) {
+            let key = Symbol("key")
+            toThis[key] = this
+            let res = toThis[key](...paramas)
+            delete toThis[key]
+
+            return res
+        }
+
+        Function.prototype.myBind1 = function(toThis,...paramas){
+            return (...paramas2)=>this.myCall1(toThis,...paramas,...paramas2)
+        }
         
     </script>
 </body>

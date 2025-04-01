@@ -1,3 +1,13 @@
+<!--
+ * @Author: ldg
+ * @Date: 2025-03-06 15:51:08
+ * @LastEditors: ldg gedongliu0803@gmail.com
+ * @LastEditTime: 2025-03-17 10:28:40
+ * @FilePath: \webLearn\handWriting\1.new操作符.html
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,11 +25,19 @@
             return res instanceof Object ? res : obj;
         }
 
+
+
+        function _new1(fun, ...args) {
+            const obj = Object.create(fun.prototype)
+            let res = fun.call(obj,...args)
+            return res instanceof Object?res:obj
+            
+        }
         function Person(name, age) {
             this.name = name;
             this.age = age;
         }
-        const p = _new(Person, 'lisi', 18);
+        const p = _new1(Person, 'lisi', 18);
         console.log(p);
 
 
@@ -33,6 +51,23 @@
             4.看构造函数内部有没有返回值，如果返回的是对象类型则直接返回，否则返回创建的新对象。        
         
         */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </script>
 </body>
 </html>

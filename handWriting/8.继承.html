@@ -2,7 +2,7 @@
  * @Author: ldg
  * @Date: 2025-03-14 11:37:41
  * @LastEditors: ldg gedongliu0803@gmail.com
- * @LastEditTime: 2025-03-14 11:42:09
+ * @LastEditTime: 2025-03-17 11:05:42
  * @FilePath: \webLearn\handWriting\8.继承.html
  * @Description: 
  * 
@@ -47,6 +47,22 @@
         console.log(child);
         child.sayName();
         child.sayGender();
+
+
+
+        function Child1(name,age,a,b) {
+            Parent.call(name,age)
+            this.a = a
+            this.b = b
+            
+        }
+
+        Child1.prototype = Object.create(Parent.prototype,{
+            constructor:{
+                value:Child
+            }
+        })
+
     </script>
 </body>
 </html>

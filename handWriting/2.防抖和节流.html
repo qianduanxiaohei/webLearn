@@ -163,6 +163,43 @@ function resolvePromise(promise2, x, resolve, reject) {
     resolve(x)
   }
 }
+
+
+
+    function d(fun,timer) {
+      let time
+      return function(){
+        let args = arguments
+        let that = this
+        if (time) clearTimeout(time)
+        time = setTimeout(() => {
+          fun.call(that,...args)
+          time = null
+        }, timer);
+      }
+    }
+    function t(fun,timer) {
+      let time
+      return function(){
+        let args = arguments
+        let that = this
+        if (time) return
+        time = setTimeout(() => {
+          fun.call(that,...args)
+          time = null
+        }, timer);
+      }
+    }
+
+    function a() {
+      console.log("@");
+    }
+
+    let func = d(a,2000)
+    document.addEventListener('click',()=>{
+      console.log("@@@");
+      func()
+    })
     </script>
 </body>
 </html>
