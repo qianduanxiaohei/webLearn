@@ -1,0 +1,42 @@
+<!--
+ * @Author: ldg
+ * @Date: 2025-04-02 16:11:30
+ * @LastEditors: ldg gedongliu0803@gmail.com
+ * @LastEditTime: 2025-04-02 16:13:10
+ * @FilePath: \webLearn\handWriting\11.promiseAll.html
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+    Promise.all = function (promises) {
+        return new Promise((resolve, reject) => {
+            let count = 0
+            let arr = []
+            for (let i = 0; i < promises.length; i++) {
+                const pro = promises[i];
+                pro.then((res) => {
+                    count++
+                    arr[i] = res
+                    if (count === promises.length) {
+                        resolve(arr)
+                    }
+                }, (err) => {
+                    reject(err)
+                })
+            }
+        })
+    }
+    </script>
+
+</body>
+</html>
